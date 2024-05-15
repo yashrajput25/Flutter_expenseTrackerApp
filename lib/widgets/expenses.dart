@@ -15,7 +15,8 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-  final List<Expense> _registeredExpenses = [];
+  final List<Expense> _registeredExpenses =
+      []; //list that contains expense; they will be added in future
 
   void _openAddExpenseOverLay() {
     showModalBottomSheet(
@@ -31,9 +32,24 @@ class _ExpensesState extends State<Expenses> {
   }
 
   void _removeExpense(Expense expense) {
+    final expenseIndex = _registeredExpenses.indexOf(expense);
     setState(() {
       _registeredExpenses.remove(expense);
     });
+
+    //to undo an expense that is deleted
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+        "Expense is Deleted",
+      ),
+      action: SnackBarAction(
+          label: "Undo",
+          onPressed: () {
+            setState(() {
+              _registeredExpenses.insert(expenseIndex, expense);
+            });
+          }),
+    ));
   }
 
   @override
