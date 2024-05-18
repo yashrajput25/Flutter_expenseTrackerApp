@@ -15,8 +15,18 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-  final List<Expense> _registeredExpenses =
-      []; //list that contains expense; they will be added in future
+  final List<Expense> _registeredExpenses = [
+    Expense(
+        title: "Metro",
+        amount: 50,
+        date: DateTime.now(),
+        category: Category.travel),
+    Expense(
+        title: "Metro",
+        amount: 50,
+        date: DateTime.now(),
+        category: Category.travel)
+  ]; //list that contains expense; they will be added in future
 
   void _openAddExpenseOverLay() {
     showModalBottomSheet(
@@ -38,6 +48,7 @@ class _ExpensesState extends State<Expenses> {
     });
 
     //to undo an expense that is deleted
+    ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
         "Expense is Deleted",
